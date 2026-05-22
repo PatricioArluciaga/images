@@ -1,0 +1,17 @@
+name: Download Redpanda Image
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and Save Image
+        run: |
+          docker pull docker.io/redpandadata/redpanda:v24.1.6
+          docker save -o redpanda-v24.1.6.tar docker.io/redpandadata/redpanda:v24.1.6
+          
+      - name: Upload Image Asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: redpanda-container
+          path: redpanda-v24.1.6.tar
